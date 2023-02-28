@@ -4,16 +4,35 @@ const https = require("https");
 const morgan = require("morgan");
 const cors = require("cors");
 
+require("dotenv").config();
+
+const routes = require("./routes");
+
+const NODE = (process.env.NODE_ENV || "dev").toLowerCase();
+
 const app = express();
 
-app.use(morgan("DEV"));
+var server;
+
+if (NODE !== "production" || NODE !== "prd") {
+    server = http.createServer(app);
+} else {
+    server = https.createServer(app);
+}
+
+app.use(morgan("dev"));
+
+app.use("/", routes.main);
 
 const start = async (ip, port) => {
-    await app.listen(port, ip, async () => {
-        console.log("Server is running...");
+    await server.listen(port, ip, async () => {
+        console.log(`[${NODE.toUpperCase()}] Server is running...`);
+        console.log(`http://${ip}:${port}`);
     })
 }
 
 module.exports = {
+    app,
+    server,
     start
 }

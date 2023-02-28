@@ -1,3 +1,3 @@
-const server = require("./server");
+const app = require("./server");
 
-server.start("127.0.0.1", 3000);
+app.start("127.0.0.1", 3000);
