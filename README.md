@@ -1,1 +1,3 @@
-# bytesentinel-api
+# ByteSentinel API
+
+## Quick start
